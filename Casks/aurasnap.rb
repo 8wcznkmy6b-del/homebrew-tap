@@ -1,6 +1,6 @@
 cask "aurasnap" do
-  version "3.2.137"
-  sha256 "24efb45206064b6cd1a3313d6549b7b5f4e788ca7ccf9b6ce8062563ff634a7c"
+  version "3.2.138"
+  sha256 "87d4a2ea57b5e6dbec0503e148eaf46273191f63ff7ba08dbef4fa5dbb0eb8f9"
 
   url "https://github.com/8wcznkmy6b-del/AuraSnap-PB/releases/download/v#{version}/AuraSnap-#{version}.dmg",
       verified: "github.com/8wcznkmy6b-del/AuraSnap-PB/"
