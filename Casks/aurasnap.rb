@@ -1,9 +1,8 @@
 cask "aurasnap" do
-  version "3.2.138"
-  sha256 "87d4a2ea57b5e6dbec0503e148eaf46273191f63ff7ba08dbef4fa5dbb0eb8f9"
+  version "3.2.142"
+  sha256 "c7b9a28623d3048ddec49f23127a3ccb6d55fe0a74228e74cf40ee9a80bdabed"
 
-  url "https://github.com/8wcznkmy6b-del/AuraSnap-PB/releases/download/v#{version}/AuraSnap-#{version}.dmg",
-      verified: "github.com/8wcznkmy6b-del/AuraSnap-PB/"
+  url "https://github.com/8wcznkmy6b-del/AuraSnap-PB/releases/download/v#{version}/AuraSnap-#{version}.dmg"
   name "AuraSnap"
   desc "Screenshot, annotation, OCR, screen recording and clipboard manager"
   homepage "https://aurasnapapp.com/"
@@ -18,10 +17,11 @@ cask "aurasnap" do
 
   app "AuraSnap.app"
 
-  # 应用为自签名、未经公证：去掉下载隔离标记，否则首次打开会被门禁拦下
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{appdir}/AuraSnap.app"]
+  # 应用为自签名、未经公证：去掉下载隔离标记，否则首次打开会被门禁拦下。
+  # 在暂存目录里去掉、再由 Homebrew 移进「应用程序」：不改 /Applications 里的应用，不会碰到「App 管理」权限拦截。
+  # *_steps 是 Homebrew 7 起的声明式写法 (旧的 Ruby postflight 块已弃用)，Homebrew 安装前默认会先自动更新自身。
+  preflight_steps do
+    run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{staged_path}}/AuraSnap.app"]
   end
 
   uninstall quit: "com.dochi.AuraSnap"
